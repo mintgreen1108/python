@@ -1,2 +1,1 @@
-# python
-python note
+# 半夏  python学习笔记
