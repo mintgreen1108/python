@@ -5,12 +5,13 @@
 import os
 import string
 
-fname=raw_input('enter file name:')
-letter=raw_input('enter letter:')
+fname=raw_input('enter want read file name:')
+letters=string.letters
+result=[]
 
 try:
-    fobj = open(fname, 'r')
-
-    fobj.close()
+    fname=open(fname,'r')
+    print str(fname)
+    fname.close()
 except IOError,e:
     print 'open file error:',e
