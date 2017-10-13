@@ -19,15 +19,16 @@ def diskUsage():
 def sendEmail():
     'sen email'
     # email content
-    msg = MIMEText('waring!!!', 'plain', 'utf-8')
+    msg = MIMEText('Hard disk occupancy rate reached the upper limit!', 'plain', 'utf-8')
     msg['From'] = Header(ini.from_mail, 'utf-8')
     msg['To'] = Header(ini.to_mail, 'utf-8')
-    msg['Subject'] = Header('disk warning', 'utf-8')
+    msg['Subject'] = Header('RTMP hard disk warning', 'utf-8')
     # send
-    server = smtplib.SMTP(ini.mail_host, ini.mail_port)
+    server = smtplib.SMTP()
     server.set_debuglevel(1)
-    server.login(ini.from_name, ini.from_password)
-    server.sendmail(ini.from_mail, [ini.to_mail], msg.as_string())
+    server.connect(ini.mail_host)
+    server.login(ini.from_mail, ini.from_password)
+    server.sendmail(ini.from_mail, ini.to_mail.split(';'), msg.as_string())
     server.quit()
 
 
@@ -35,8 +36,6 @@ def sendEmail():
 try:
     if diskUsage() >= int(ini.warning_value):
         sendEmail()
-        print 'complete'
-        ini.writeLog('send email success--' + ini.to_mail + '---' + str(datetime.datetime.now()))
+        ini.writeLog(str(datetime.datetime.now()) + '---send email success--' + ini.to_mail, ini.log + 'mail/')
 except Exception, e:
-    print 'exception'
-    ini.writeLog('send warning email error--' + str(e) + str(datetime.datetime.now()), ini.log + 'mail/')
+    ini.writeLog(str(datetime.datetime.now()) + 'send warning email error--' + str(e), ini.log + 'mail/')
