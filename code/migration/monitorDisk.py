@@ -24,9 +24,8 @@ def sendEmail():
     msg['To'] = Header(ini.to_mail, 'utf-8')
     msg['Subject'] = Header('RTMP hard disk warning', 'utf-8')
     # send
-    server = smtplib.SMTP()
+    server = smtplib.SMTP_SSL(ini.mail_host, ini.mail_port)
     server.set_debuglevel(1)
-    server.connect(ini.mail_host)
     server.login(ini.from_mail, ini.from_password)
     server.sendmail(ini.from_mail, ini.to_mail.split(';'), msg.as_string())
     server.quit()

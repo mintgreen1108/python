@@ -7,7 +7,7 @@ import datetime
 import os
 
 cf = ConfigParser.ConfigParser()
-cf.read('config.conf')
+cf.read(os.path.dirname(__file__) + '/config.conf')
 
 # get ini config
 
@@ -22,6 +22,7 @@ from_mail = cf.get('mail', 'from_mail')
 from_name = cf.get('mail', 'from_name')
 from_password = cf.get('mail', 'from_password')
 mail_host = cf.get('mail', 'mail_host')
+mail_port = cf.get('mail', 'mail_port')
 
 disk_path = cf.get('disk', 'mounted_path')
 warning_value = cf.get('disk', 'warning_value')
